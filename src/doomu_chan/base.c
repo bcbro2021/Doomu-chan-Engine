@@ -1,10 +1,6 @@
 #include "base.h"
+#include <GL/glut.h>
 #include <math.h>
-#include <SDL2/SDL.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <string.h>
 
 #define PI 3.14159265359
 
@@ -159,3 +155,4 @@ int All_Textures[]=               //all 32x32 textures
  0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,1, 1,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,   
  0,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,0,         
 };
+
