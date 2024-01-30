@@ -18,6 +18,18 @@ int map[] =
     1,1,1,1,1,1,1,1,
 };
 
+void drawMap(SDL_Renderer* renderer) {
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    for (int y=0;y < mapY;y++) {
+        for (int x=0;x < mapX;x++) {
+            if (map[y*mapX+x] == 1) {
+                SDL_Rect rect = {x*mapS,y*mapS,mapS-1,mapS-1};
+                SDL_RenderFillRect(renderer,&rect);
+            }
+        }
+    }
+}
+
 
 float distance(ax,ay,bx,by,ang){ return cos(degToRad(ang))*(bx-ax)-sin(degToRad(ang))*(by-ay);}
 void drawRays2D(SDL_Renderer* renderer,int px,int py,float pdx,float dpy,float pa)
@@ -60,13 +72,13 @@ void drawRays2D(SDL_Renderer* renderer,int px,int py,float pdx,float dpy,float p
         SDL_SetRenderDrawColor(renderer, 0, 100, 0, 255);
         if(disV<disH){ rx=vx; ry=vy; disH=disV; SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);}
 
-        SDL_RenderDrawLine(renderer,px,py,rx,ry);
+        //SDL_RenderDrawLine(renderer,px,py,rx,ry);
             
         int ca=FixAng(pa-ra); disH=disH*cos(degToRad(ca));                            //fix fisheye 
         int lineH = (mapS*320)/(disH); if(lineH>320){ lineH=320;}                     //line height and limit
         int lineOff = 160 - (lineH>>1);                                               //line offset
 
-        SDL_Rect lineRect = { r * 8 + 530, lineOff, 8, lineH };
+        SDL_Rect lineRect = { r * 8 + 300, lineOff+100, 8, lineH };
         SDL_RenderFillRect(renderer, &lineRect);
 
         //draw vertical wall  
@@ -131,21 +143,14 @@ int main(int argc, char const *argv[])
         clear_renderer(renderer,0,0,0,255);
 
         // draw map
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        for (int y=0;y < mapY;y++) {
-            for (int x=0;x < mapX;x++) {
-                if (map[y*mapX+x] == 1) {
-                    SDL_Rect rect = {x*mapS,y*mapS,mapS-1,mapS-1};
-                    SDL_RenderFillRect(renderer,&rect);
-                }
-            }
-        }
+        //drawMap(renderer);
+        
 
 
         // draw player
-        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+        /*SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
         SDL_RenderFillRect(renderer,&player);
-        SDL_RenderDrawLine(renderer,player.x,player.y,player.x+pdx*5,player.y+pdy*5);
+        SDL_RenderDrawLine(renderer,player.x,player.y,player.x+pdx*5,player.y+pdy*5);*/
 
         // draw rays
         drawRays2D(renderer,player.x,player.y,pdx,pdy,pa);        
