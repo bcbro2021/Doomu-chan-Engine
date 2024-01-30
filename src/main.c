@@ -258,7 +258,7 @@ int main(int argc, char* argv[])
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
     glutInitWindowSize(1024,510);
     glutInitWindowPosition(200,200);
-    glutCreateWindow("YouTube-3DSage");
+    glutCreateWindow("Raycaster Testing");
     init();
     glutDisplayFunc(display);
     glutReshapeFunc(resize);
