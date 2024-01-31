@@ -1,39 +1,23 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <GL/glut.h>
+#include <stdbool.h>
 #include <math.h>
+
+#include <GL/glut.h>
+
 #include "doomu_chan/base.h"
 #include "doomu_chan/render.h"
 #include "doomu_chan/window.h"
-#include <stdbool.h>
 
 #define MAX_PATH_LENGTH 256
 
 #define PI 3.14159265359
 
-typedef struct {
-    float x,y,dx,dy,a;
-} Player;
-
 float frame1, frame2, fps;
 char *scene;
 
-typedef struct {
-    int w, a, d, s; // button state on off
-} ButtonKeys;
-
-typedef struct {
-    int x, y; // mouse coordinates
-} Mouse;
-
-typedef struct {
-    float x;
-    float y;
-    float width;
-    float height;
-} Rectangle;
-
 Player player;
+Sprite sp[1];
 ButtonKeys Keys;
 Mouse mouse;
 
@@ -134,6 +118,11 @@ void display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     drawRays2D(player.x, player.y, player.dx, player.dy, player.a);
 
+    for (int x=0;x<1;x++) {
+        drawSprite(sp[x],player);
+    }
+    
+
     if (scene == "game") {
         glColor3f(1.0,1.0,1.0);
         char fps_dis[500];
@@ -202,6 +191,8 @@ void init_game() {
     scene="game";
     player.x = 300; player.y = 430; player.a = 90;
     player.dx = cos(degToRad(player.a)); player.dy = -sin(degToRad(player.a)); // init player
+
+    sp[0].type=0; sp[0].state=1; sp[0].map=0; sp[0].x=2*64; sp[0].y=2*64;   sp[0].z=20;
 
     // init map
     create_map("test");

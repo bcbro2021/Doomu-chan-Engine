@@ -1,5 +1,6 @@
 #include "render.h"
 #include "base.h"
+#include "../../assets/sprites.ppm"
 #include <GL/glut.h>
 #include <math.h>
 #include <stdio.h>
@@ -75,8 +76,9 @@ int r,mx,my,mp,dof,side; float vx,vy,rx,ry,ra,xo,yo,disV,disH;
         float ty_step=32.0/(float)lineH; 
         float ty_off=0; 
         if(lineH>640){ ty_off=(lineH-640)/2.0; lineH=640;}                            //line height and limit
-        int lineOff = 320 - (lineH>>1);                                               //line offset
+        int lineOff = 320 - (lineH>>1);                                           //line offset
 
+        depth[r]=disH; // line depth
         //---draw walls---
         int xOffset = 0;
         int y;
@@ -113,4 +115,46 @@ int r,mx,my,mp,dof,side; float vx,vy,rx,ry,ra,xo,yo,disV,disH;
         
         ra=FixAng(ra-0.5);                                                               //go to next ray, 60 total
     }
+}
+
+void drawSprite(Sprite sp, Player p) {
+int x,y;
+  float sx=sp.x-p.x; //temp float variables
+  float sy=sp.y-p.y;
+  float sz=sp.z;
+
+  float CS=cos(degToRad(p.a)), SN=sin(degToRad(p.a)); //rotate around origin
+  float a=sy*CS+sx*SN; 
+  float b=sx*CS-sy*SN; 
+  sx=a; sy=b;
+
+  sx=(sx*108.0/sy)+(120/2); //convert to screen x,y
+  sy=(sz*108.0/sy)+( 80/2);
+
+  int scale=32*80/b;   //scale sprite based on distance
+  if(scale<0){ scale=0;} if(scale>120){ scale=120;}  
+
+  //texture
+  float t_x=0, t_y=31, t_x_step=31.5/(float)scale, t_y_step=32.0/(float)scale;
+
+  for(x=sx-scale/2;x<sx+scale/2;x++)
+  {
+   t_y=31;
+   for(y=0;y<scale;y++)
+   {
+    if(sp.state==1 && x>0 && x<120 && b<depth[x])
+    {
+     int pixel=((int)t_y*32+(int)t_x)*3+(sp.map*32*32*3);
+     int red   =sprites[pixel+0];
+     int green =sprites[pixel+1];
+     int blue  =sprites[pixel+2];
+     if(red!=255, green!=0, blue!=255) //dont draw if purple
+     {
+      glPointSize(8); glColor3ub(red,green,blue); glBegin(GL_POINTS); glVertex2i(x*8,sy*8-y*8); glEnd(); //draw point 
+     }
+     t_y-=t_y_step; if(t_y<0){ t_y=0;}
+    }
+   }
+   t_x+=t_x_step;
+  }
 }
