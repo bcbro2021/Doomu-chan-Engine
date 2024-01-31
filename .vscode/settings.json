@@ -2,6 +2,7 @@
     "C_Cpp.errorSquiggles": "enabled",
     "files.associations": {
         "cmath": "cpp",
-        "base.h": "c"
+        "base.h": "c",
+        "glut.h": "c"
     }
 }

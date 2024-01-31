@@ -4,6 +4,28 @@
 #include <math.h>
 #include <stdio.h>
 
+void renderText(float x, float y, void* font, const char* string) {
+    glRasterPos2f(x, y);
+
+    while (*string) {
+        glutBitmapCharacter(font, *string);
+        string++;
+    }
+}
+
+void renderStrokeText(void* font, const char* string, float x, float y, float scale) {
+    glPushMatrix();
+    glTranslatef(x, y, 0);
+    glScalef(scale, -scale, 1.0);
+
+    while (*string) {
+        glutStrokeCharacter(font, *string);
+        string++;
+    }
+
+    glPopMatrix();
+}
+
 //---------------------------Draw Rays and Walls--------------------------------
 void drawRays2D(float px,float py,float pdx,float pdy,float pa)
 {
@@ -91,23 +113,4 @@ void drawRays2D(float px,float py,float pdx,float pdy,float pa)
         
         ra=FixAng(ra-0.5);                                                               //go to next ray, 60 total
     }
-}//-----------------------------------------------------------------------------
-
-void drawMap2D()
-{
-    int x,y,xo,yo;
-    for(y=0;y<mapY;y++)
-    {
-        for(x=0;x<mapX;x++)
-        {
-            if(mapW[y*mapX+x]>0){ glColor3f(1,1,1);} else{ glColor3f(0,0,0);}
-            xo=x*mapS; yo=y*mapS;
-            glBegin(GL_QUADS); 
-            glVertex2i( 0   +xo+1, 0   +yo+1); 
-            glVertex2i( 0   +xo+1, mapS+yo-1); 
-            glVertex2i( mapS+xo-1, mapS+yo-1);  
-            glVertex2i( mapS+xo-1, 0   +yo+1); 
-            glEnd();
-        } 
-    } 
 }
