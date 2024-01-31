@@ -10,7 +10,11 @@
 #define MAX_PATH_LENGTH 256
 
 #define PI 3.14159265359
-float px, py, pdx, pdy, pa;
+
+typedef struct {
+    float x,y,dx,dy,a;
+} Player;
+
 float frame1, frame2, fps;
 char *scene;
 
@@ -29,6 +33,7 @@ typedef struct {
     float height;
 } Rectangle;
 
+Player player;
 ButtonKeys Keys;
 Mouse mouse;
 
@@ -49,46 +54,46 @@ bool pointRectCollision(Mouse point, Rectangle rect) {
 
 void move_and_collide() {
 
-    int xo = 0; if (pdx < 0) { xo = -20; } else { xo = 20; } // x offset to check map
-    int yo = 0; if (pdy < 0) { yo = -20; } else { yo = 20; } // y offset to check map
-    int ipx = px / 64.0, ipx_add_xo = (px + xo) / 64.0, ipx_sub_xo = (px - xo) / 64.0; // x position and offset
-    int ipy = py / 64.0, ipy_add_yo = (py + yo) / 64.0, ipy_sub_yo = (py - yo) / 64.0; // y position and offset
+    int xo = 0; if (player.dx < 0) { xo = -20; } else { xo = 20; } // x offset to check map
+    int yo = 0; if (player.dy < 0) { yo = -20; } else { yo = 20; } // y offset to check map
+    int ipx = player.x / 64.0, ipx_add_xo = (player.x + xo) / 64.0, ipx_sub_xo = (player.x - xo) / 64.0; // x position and offset
+    int ipy = player.y / 64.0, ipy_add_yo = (player.y + yo) / 64.0, ipy_sub_yo = (player.y - yo) / 64.0; // y position and offset
 
     // buttons
     if (Keys.a == 1) {
         // Left strafing
-        float new_px = px + pdy * 0.2 * fps;
-        float new_py = py - pdx * 0.2 * fps;
+        float new_px = player.x + player.dy * 0.2 * fps;
+        float new_py = player.y - player.dx * 0.2 * fps;
         int new_ipx = new_px / 64.0;
         int new_ipy = new_py / 64.0;
 
         if (mapW[new_ipy * mapX + new_ipx] == 0) {
-            px = new_px;
-            py = new_py;
+            player.x = new_px;
+            player.y = new_py;
         }
     }
     if (Keys.d == 1) {
         // Right strafing
-        float new_px = px - pdy * 0.2 * fps;
-        float new_py = py + pdx * 0.2 * fps;
+        float new_px = player.x - player.dy * 0.2 * fps;
+        float new_py = player.y + player.dx * 0.2 * fps;
         int new_ipx = new_px / 64.0;
         int new_ipy = new_py / 64.0;
 
         if (mapW[new_ipy * mapX + new_ipx] == 0) {
-            px = new_px;
-            py = new_py;
+            player.x = new_px;
+            player.y = new_py;
         }
     }
 
     if (Keys.w == 1) // move forward
     {
-        if (mapW[ipy * mapX + ipx_add_xo] == 0) { px += pdx * 0.2 * fps; }
-        if (mapW[ipy_add_yo * mapX + ipx] == 0) { py += pdy * 0.2 * fps; }
+        if (mapW[ipy * mapX + ipx_add_xo] == 0) { player.x += player.dx * 0.2 * fps; }
+        if (mapW[ipy_add_yo * mapX + ipx] == 0) { player.y += player.dy * 0.2 * fps; }
     }
     if (Keys.s == 1) // move backward
     {
-        if (mapW[ipy * mapX + ipx_sub_xo] == 0) { px -= pdx * 0.2 * fps; }
-        if (mapW[ipy_sub_yo * mapX + ipx] == 0) { py -= pdy * 0.2 * fps; }
+        if (mapW[ipy * mapX + ipx_sub_xo] == 0) { player.x -= player.dx * 0.2 * fps; }
+        if (mapW[ipy_sub_yo * mapX + ipx] == 0) { player.y -= player.dy * 0.2 * fps; }
     }
 
     // Center the mouse at the window's center only if it has moved
@@ -96,10 +101,10 @@ void move_and_collide() {
         glutWarpPointer(win_width / 2, win_height / 2);
         // Update the player's angle based on the mouse movement
         int dx = mouse.x - win_width / 2;
-        pa += -dx * 0.08; // Adjust the sensitivity as needed
-        pa = FixAng(pa);
-        pdx = cos(degToRad(pa));
-        pdy = -sin(degToRad(pa));
+        player.a += -dx * 0.08; // Adjust the sensitivity as needed
+        player.a = FixAng(player.a);
+        player.dx = cos(degToRad(player.a));
+        player.dy = -sin(degToRad(player.a));
     }
 }
 
@@ -115,7 +120,7 @@ void display() {
     } 
     
     else if (scene == "menu") {
-        pa += 0.2;
+        player.a += 0.2;
         if (pointRectCollision(mouse,playBtn)) {
             playBtnColliding = true;
         } else {
@@ -127,7 +132,7 @@ void display() {
 
     // drawing
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    drawRays2D(px, py, pdx, pdy, pa);
+    drawRays2D(player.x, player.y, player.dx, player.dy, player.a);
 
     if (scene == "game") {
         glColor3f(1.0,1.0,1.0);
@@ -135,7 +140,7 @@ void display() {
         sprintf(fps_dis,"fps: %f",fps);
         renderText(20,20,GLUT_BITMAP_HELVETICA_18,fps_dis);
         char coords[1000];
-        sprintf(coords,"x: %f y: %f a: %f",px,py,pa);
+        sprintf(coords,"x: %f y: %f a: %f",player.x,player.y,player.a);
         renderText(20,40,GLUT_BITMAP_HELVETICA_18,coords);
     } 
     if (scene == "menu") {
@@ -178,8 +183,8 @@ void ButtonUp(unsigned char key, int x, int y) // keyboard button pressed up
 
 void init_menu() {
     scene="menu";
-    px = 300; py = 430; pa = 90;
-    pdx = cos(degToRad(pa)); pdy = -sin(degToRad(pa)); // init player
+    player.x = 300; player.y = 430; player.a = 90;
+    player.dx = cos(degToRad(player.a)); player.dy = -sin(degToRad(player.a)); // init player
 
     // init map
     create_map("mainmenu");
@@ -195,8 +200,8 @@ void init_menu() {
 
 void init_game() {
     scene="game";
-    px = 300; py = 430; pa = 90;
-    pdx = cos(degToRad(pa)); pdy = -sin(degToRad(pa)); // init player
+    player.x = 300; player.y = 430; player.a = 90;
+    player.dx = cos(degToRad(player.a)); player.dy = -sin(degToRad(player.a)); // init player
 
     // init map
     create_map("test");

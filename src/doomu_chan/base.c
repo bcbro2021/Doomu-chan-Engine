@@ -21,14 +21,14 @@ float FixAng(float a){
 float distance(float ax, float ay, float bx, float by, float ang){
     return cos(degToRad(ang))*(bx-ax)-sin(degToRad(ang))*(by-ay);
 }
-void readMapFromFile(const char* filename, int* mapArray, int mapSize) {
+void readMapFromFile(const char* filename, int* mapArray) {
     FILE* file = fopen(filename, "r");
     if (file == NULL) {
         perror("Error opening file");
         return;
     }
 
-    for (int i = 0; i < mapSize; i++) {
+    for (int i = 0; i < MAP_SIZE; i++) {
         if (fscanf(file, "%d", &mapArray[i]) != 1) {
             fprintf(stderr, "Error reading from file\n");
             break;
@@ -52,11 +52,11 @@ void create_map(const char* map_name) {
     sprintf(mapf_path,"maps/%s/mapf.txt",map_name);
     sprintf(mapc_path,"maps/%s/mapc.txt",map_name);
 
-    readMapFromFile(mapw_path, mapW, 81); // walls
+    readMapFromFile(mapw_path, mapW); // walls
 
-    readMapFromFile(mapf_path, mapF, 81); // floor
+    readMapFromFile(mapf_path, mapF); // floor
 
-    readMapFromFile(mapc_path, mapC, 81); // ceiling
+    readMapFromFile(mapc_path, mapC); // ceiling
 }
 
 int All_Textures[]=               //all 32x32 textures
