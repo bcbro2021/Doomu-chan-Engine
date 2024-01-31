@@ -29,7 +29,7 @@ void renderStrokeText(void* font, const char* string, float x, float y, float sc
 //---------------------------Draw Rays and Walls--------------------------------
 void drawRays2D(float px,float py,float pdx,float pdy,float pa)
 {
-    int r,mx,my,mp,dof,side; float vx,vy,rx,ry,ra,xo,yo,disV,disH; 
+int r,mx,my,mp,dof,side; float vx,vy,rx,ry,ra,xo,yo,disV,disH; 
     
     ra=FixAng(pa+30);                                                              //ray set back 30 degrees
  

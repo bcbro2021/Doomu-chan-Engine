@@ -18,11 +18,9 @@ float FixAng(float a){
     } 
     return a;
 }
-
 float distance(float ax, float ay, float bx, float by, float ang){
     return cos(degToRad(ang))*(bx-ax)-sin(degToRad(ang))*(by-ay);
 }
-
 void readMapFromFile(const char* filename, int* mapArray, int mapSize) {
     FILE* file = fopen(filename, "r");
     if (file == NULL) {
@@ -208,4 +206,3 @@ int All_Textures[]=               //all 32x32 textures
  0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,1, 1,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,   
  0,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,0,         
 };
-

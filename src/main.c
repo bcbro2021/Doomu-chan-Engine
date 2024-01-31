@@ -10,7 +10,6 @@
 #define MAX_PATH_LENGTH 256
 
 #define PI 3.14159265359
-
 float px, py, pdx, pdy, pa;
 float frame1, frame2, fps;
 char *scene;
@@ -119,7 +118,6 @@ void display() {
         pa += 0.2;
         if (pointRectCollision(mouse,playBtn)) {
             playBtnColliding = true;
-            printf("Hello WOrld");
         } else {
             playBtnColliding = false;
         }
@@ -133,9 +131,12 @@ void display() {
 
     if (scene == "game") {
         glColor3f(1.0,1.0,1.0);
+        char fps_dis[500];
+        sprintf(fps_dis,"fps: %f",fps);
+        renderText(20,20,GLUT_BITMAP_HELVETICA_18,fps_dis);
         char coords[1000];
         sprintf(coords,"x: %f y: %f a: %f",px,py,pa);
-        renderText(20,20,GLUT_BITMAP_HELVETICA_18,coords);
+        renderText(20,40,GLUT_BITMAP_HELVETICA_18,coords);
     } 
     if (scene == "menu") {
         glColor3f(1.0,1.0,1.0);
@@ -159,14 +160,6 @@ void ButtonDown(unsigned char key, int x, int y) // keyboard button pressed down
     if (key == 'd') { Keys.d = 1; }
     if (key == 'w') { Keys.w = 1; }
     if (key == 's') { Keys.s = 1; }
-    if (key == 'e') // open doors
-    {
-        int xo = 0; if (pdx < 0) { xo = -25; } else { xo = 25; }
-        int yo = 0; if (pdy < 0) { yo = -25; } else { yo = 25; }
-        int ipx = px / 64.0, ipx_add_xo = (px + xo) / 64.0;
-        int ipy = py / 64.0, ipy_add_yo = (py + yo) / 64.0;
-        if (mapW[ipy_add_yo * mapX + ipx_add_xo] == 4) { mapW[ipy_add_yo * mapX + ipx_add_xo] = 0; }
-    }
     if (key == 27) // ASCII code for escape key
     {
         exit(0); // Exit the game
@@ -215,17 +208,15 @@ void init_game() {
 void mouseClick(int button, int state, int x, int y) {
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
         if (playBtnColliding) {
-            init_game();
+            if (scene=="menu") {init_game();}
         }
     }
 }
 
 int main(int argc, char* argv[]) {
-    
     glutInit(&argc, argv);
-    init_window(win_width,win_height,"Doomu Chan");
+    init_window(win_width,win_height,"Doomu Chan uwu");
     init_menu();
-
 
     glutMouseFunc(mouseClick);
     glutDisplayFunc(display);
