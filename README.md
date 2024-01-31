@@ -1,5 +1,5 @@
 # DOOMU CHAN(づ｡◕‿‿◕｡)づ
-a not so versatile doom based engine being made with c and glut
+a not so versatile doom (more like wolfenstein but im gonna make it like doom sooner or later) based engine being made with c and glut
 
 ## Try it out
 Dependencies:
