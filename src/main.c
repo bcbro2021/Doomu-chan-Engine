@@ -192,7 +192,7 @@ void init_game() {
     player.x = 300; player.y = 430; player.a = 90;
     player.dx = cos(degToRad(player.a)); player.dy = -sin(degToRad(player.a)); // init player
 
-    sp[0].type=0; sp[0].state=1; sp[0].map=0; sp[0].x=2*64; sp[0].y=2*64;   sp[0].z=20;
+    sp[0].type=0; sp[0].state=1; sp[0].map=0; sp[0].x=2*64; sp[0].y=2*64; sp[0].z=0;
 
     // init map
     create_map("test");
