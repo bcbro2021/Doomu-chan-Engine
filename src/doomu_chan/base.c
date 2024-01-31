@@ -1,12 +1,65 @@
 #include "base.h"
 #include <GL/glut.h>
 #include <math.h>
+#include <stdio.h>
 
 #define PI 3.14159265359
 
-float degToRad(float a) { return a*PI/180.0;}
-float FixAng(float a){ if(a>359){ a-=360;} if(a<0){ a+=360;} return a;}
-float distance(float ax, float ay, float bx, float by, float ang){ return cos(degToRad(ang))*(bx-ax)-sin(degToRad(ang))*(by-ay);}
+float degToRad(float a) {
+    return a*PI/180.0;
+
+}
+float FixAng(float a){
+    if(a>359){
+        a-=360;
+    } 
+    if(a<0){
+        a+=360;
+    } 
+    return a;
+}
+
+float distance(float ax, float ay, float bx, float by, float ang){
+    return cos(degToRad(ang))*(bx-ax)-sin(degToRad(ang))*(by-ay);
+}
+
+void readMapFromFile(const char* filename, int* mapArray, int mapSize) {
+    FILE* file = fopen(filename, "r");
+    if (file == NULL) {
+        perror("Error opening file");
+        return;
+    }
+
+    for (int i = 0; i < mapSize; i++) {
+        if (fscanf(file, "%d", &mapArray[i]) != 1) {
+            fprintf(stderr, "Error reading from file\n");
+            break;
+        }
+    }
+
+    fclose(file);
+}
+
+int mapX = 9;      //map width
+int mapY = 9;     //map height
+int mapS = 64;     //map cube size
+
+                     //Edit these 3 arrays with values 0-4 to create your own level! 
+void create_map(const char* map_name) {
+    char mapw_path[50];
+    char mapf_path[50];
+    char mapc_path[50];
+
+    sprintf(mapw_path,"maps/%s/mapw.txt",map_name);
+    sprintf(mapf_path,"maps/%s/mapf.txt",map_name);
+    sprintf(mapc_path,"maps/%s/mapc.txt",map_name);
+
+    readMapFromFile(mapw_path, mapW, 81); // walls
+
+    readMapFromFile(mapf_path, mapF, 81); // floor
+
+    readMapFromFile(mapc_path, mapC, 81); // ceiling
+}
 
 int All_Textures[]=               //all 32x32 textures
 {

@@ -2,47 +2,7 @@
 #include "base.h"
 #include <GL/glut.h>
 #include <math.h>
-
-int mapX = 8;      //map width
-int mapY = 8;     //map height
-int mapS = 64;     //map cube size
-
-                     //Edit these 3 arrays with values 0-4 to create your own level! 
-int mapW[]=          //walls
-{
- 1,1,1,1,1,3,1,1,
- 1,0,0,1,0,0,0,1,
- 1,0,0,4,0,2,0,1,
- 1,1,4,1,0,0,0,1,
- 2,0,0,0,0,0,0,1,
- 2,0,0,0,0,1,0,1,
- 2,0,0,0,0,0,0,1,
- 1,1,3,1,3,1,3,1,	
-};
-
-int mapF[]=          //floors
-{
- 0,0,0,0,0,0,0,0,
- 0,0,0,0,1,1,0,0,
- 0,0,0,0,2,0,0,0,
- 0,0,0,0,0,0,0,0,
- 0,0,2,0,0,0,0,0,
- 0,0,0,0,0,0,0,0,
- 0,1,1,1,1,0,0,0,
- 0,0,0,0,0,0,0,0,	
-};
-
-int mapC[]=          //ceiling
-{
- 0,0,0,0,0,0,0,0,
- 0,0,0,0,0,0,0,0,
- 0,0,0,0,0,0,0,0,
- 0,0,0,0,0,0,1,0,
- 0,1,3,1,0,0,0,0,
- 0,0,0,0,0,0,0,0,
- 0,0,0,0,0,0,0,0,
- 0,0,0,0,0,0,0,0,	
-};
+#include <stdio.h>
 
 //---------------------------Draw Rays and Walls--------------------------------
 void drawRays2D(float px,float py,float pdx,float pdy,float pa)

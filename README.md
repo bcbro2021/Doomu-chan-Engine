@@ -1,9 +1,9 @@
 # DOOMU CHAN(づ｡◕‿‿◕｡)づ
-a not so versatile doom based engine being made with c and sdl2
+a not so versatile doom based engine being made with c and glut
 
 ## Try it out
 Dependencies:
-gcc, libsdl2-dev
+gcc, freeglut3
 
 
 Installing and running doomu-chan

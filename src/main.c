@@ -35,6 +35,7 @@ void init()
     gluOrtho2D(0,win_width,win_height,0);
     px=150; py=400; pa=90;
     pdx=cos(degToRad(pa)); pdy=-sin(degToRad(pa));                                 //init player
+    create_map("test");
 }
 
 
