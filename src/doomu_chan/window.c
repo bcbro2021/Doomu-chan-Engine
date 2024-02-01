@@ -1,8 +1,9 @@
 #include "window.h"
+#include "base.h"
 #include <GL/glut.h>
 
-int win_width = 960;
-int win_height = 640;
+win_width = 960;
+win_height = 640;
 
 void init_window(int width, int height, const char* title) {
     

@@ -132,7 +132,7 @@ int x,y;
   sy=(sz*108.0/sy)+( 80/2);
 
   int scale=32*80/b;   //scale sprite based on distance
-  if(scale<0){ scale=0;} if(scale>120){ scale=120;}  
+  if(scale<0){ scale=0;} if(scale>120){ scale=120;}
 
   //texture
   float t_x=0, t_y=31, t_x_step=31.5/(float)scale, t_y_step=32.0/(float)scale;
@@ -148,7 +148,7 @@ int x,y;
      int red   =sprites[pixel+0];
      int green =sprites[pixel+1];
      int blue  =sprites[pixel+2];
-     if(red!=255, green!=0, blue!=255) //dont draw if purple
+     if(red!=184, green!=0, blue!=255) //dont draw if purple
      {
       glPointSize(8); glColor3ub(red,green,blue); glBegin(GL_POINTS); glVertex2i(x*8,sy*8-y*8); glEnd(); //draw point 
      }

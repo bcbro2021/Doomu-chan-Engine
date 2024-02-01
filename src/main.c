@@ -13,9 +13,6 @@
 
 #define PI 3.14159265359
 
-float frame1, frame2, fps;
-char *scene;
-
 Player player;
 Sprite sp[1];
 ButtonKeys Keys;
@@ -35,9 +32,7 @@ bool pointRectCollision(Mouse point, Rectangle rect) {
             point.y >= rect.y && point.y <= rect.y + rect.height);
 }
 
-
 void move_and_collide() {
-
     int xo = 0; if (player.dx < 0) { xo = -20; } else { xo = 20; } // x offset to check map
     int yo = 0; if (player.dy < 0) { yo = -20; } else { yo = 20; } // y offset to check map
     int ipx = player.x / 64.0, ipx_add_xo = (player.x + xo) / 64.0, ipx_sub_xo = (player.x - xo) / 64.0; // x position and offset
@@ -192,7 +187,8 @@ void init_game() {
     player.x = 300; player.y = 430; player.a = 90;
     player.dx = cos(degToRad(player.a)); player.dy = -sin(degToRad(player.a)); // init player
 
-    sp[0].type=0; sp[0].state=1; sp[0].map=0; sp[0].x=2*64; sp[0].y=2*64; sp[0].z=0;
+    // init sprites
+    sp[0].type=0; sp[0].state=1; sp[0].map=4; sp[0].x=2*64; sp[0].y=2*64; sp[0].z=20;
 
     // init map
     create_map("test");

@@ -3,6 +3,22 @@
 
 #define MAP_SIZE 81
 
+// win and texturing
+int All_Textures[16384];
+// fps
+float frame1, frame2, fps;
+
+// map
+int mapX;      //map width
+int mapY;     //map height
+int mapS;     //map cube size
+int mapW[MAP_SIZE];
+int mapF[MAP_SIZE];
+int mapC[MAP_SIZE];
+
+//misc
+char *scene;
+
 typedef struct {
     int w, a, d, s; // button state on off
 } ButtonKeys;
@@ -30,20 +46,14 @@ typedef struct {
 } Sprite;
 
 
-int All_Textures[16384];
+
 
 float degToRad(float a);
 float FixAng(float a);
 float distance(float ax, float ay, float bx, float by, float ang);
 void readMapFromFile(const char* filename, int* mapArray);
 
-int mapX;      //map width
-int mapY;     //map height
-int mapS;     //map cube size
-int mapW[MAP_SIZE];
-int mapF[MAP_SIZE];
-int mapC[MAP_SIZE];
-
+// map functions
 void create_map(const char* map_dir);
 
 #endif
