@@ -89,8 +89,8 @@ int r,mx,my,mp,dof,side; float vx,vy,rx,ry,ra,xo,yo,disV,disH;
         for(y=0;y<lineH;y++)
         {
             float c=All_Textures[(int)(ty)*32 + (int)(tx)]*shade;
-            if(hmt==0){ glColor3f(c    , c/2.0, c/2.0);} //checkerboard red
-            if(hmt==1){ glColor3f(c    , c    , c/2.0);} //Brick yellow
+            if(hmt==0){ glColor3f(c    , c    , c/2.0); } //checkerboard red
+            if(hmt==1){ glColor3f(c    , c/2.0, c/2.0);} //Brick yellow
             if(hmt==2){ glColor3f(c/2.0, c/2.0, c    );} //window blue
             if(hmt==3){ glColor3f(c/2.0, c    , c/2.0);} //door green
             glPointSize(8);glBegin(GL_POINTS);glVertex2i(r*8+xOffset,y+lineOff);glEnd();//draw vertical wall  

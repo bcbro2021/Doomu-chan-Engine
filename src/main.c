@@ -13,10 +13,7 @@
 
 #define PI 3.14159265359
 
-Player player;
-Sprite sp[1];
-ButtonKeys Keys;
-Mouse mouse;
+Player player; Sprite sp[1]; ButtonKeys Keys; Mouse mouse;
 
 Rectangle playBtn;
 bool playBtnColliding;
