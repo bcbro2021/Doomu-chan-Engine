@@ -1,6 +1,21 @@
 # DOOMU CHAN(づ｡◕‿‿◕｡)づ
 a not so versatile doom (more like wolfenstein but im gonna make it like doom sooner or later) based engine being made with c and glut
 
+## Features
+- Wolfenstein style rendering
+- mouse based camera movement
+- player movement
+- sprite renderer
+- custom texture renderering
+
+## Working on
+- custom texture loader
+- wall rendering with custom textures
+- camera up and down movement
+- decals
+- sprite interaction
+
+
 ## Try it out
 Dependencies:
 gcc, freeglut3
