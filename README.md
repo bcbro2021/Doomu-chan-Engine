@@ -8,13 +8,6 @@ a not so versatile doom (more like wolfenstein but im gonna make it like doom so
 - sprite renderer
 - custom texture renderering
 
-## Working on
-- custom texture loader
-- wall rendering with custom textures
-- decals
-- sprite interaction
-
-
 ## Try it out
 Dependencies:
 gcc, freeglut3
